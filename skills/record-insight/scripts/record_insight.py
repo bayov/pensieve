@@ -77,6 +77,8 @@ def main():
         with open(file_path, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2)
         print(f"Insight recorded successfully: {file_path}")
+        print(f"\n### Trigger\n{args.trigger}")
+        print(f"\n### Insight\n{args.insight}")
     except IOError as e:
         print(f"Error: Could not write to file '{file_path}': {e}",
               file=sys.stderr)
