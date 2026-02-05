@@ -28,7 +28,6 @@ def get_grouped_insights():
             
             entry = {
                 "filename": filename,
-                "slug": data.get("slug", "unknown"),
                 "trigger": data.get("trigger", "No trigger provided"),
                 "content": data.get("insight", "")
             }

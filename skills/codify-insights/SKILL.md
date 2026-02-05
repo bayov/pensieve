@@ -38,6 +38,7 @@ contains a list of pending insights for that directory:
     "insights": [
       {
         "filename": "...",
+        "trigger": "...",
         "content": "..."
       }
     ]
