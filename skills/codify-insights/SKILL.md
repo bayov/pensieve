@@ -1,6 +1,6 @@
 ---
 name: codify-insights
-description: Codifies pending Agent insights from .pensieve/insights into the codebase's AGENTS.md files (and optionally human docs) to permanently improve Agent context. Use when explicitly requested by the user to "process insights" or "learn from insights".
+description: Codifies pending Agent insights from .pensieve/insights into the codebase's AGENTS.md files. Use ONLY when explicitly requested by the user (e.g., "process insights", "codify insights"). NEVER use this skill proactively.
 ---
 
 # Codify Insights

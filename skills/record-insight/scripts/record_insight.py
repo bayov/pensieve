@@ -61,25 +61,21 @@ def main():
     timestamp = now.strftime("%Y-%m-%d.%H-%M-%S")
 
     # Construct filename
-    filename = f"{timestamp}.{safe_slug}.md"
+    filename = f"{timestamp}.{safe_slug}.json"
     file_path = os.path.join(insights_dir, filename)
 
-    # Content format
-    content = f"""---
-path: {args.path}
----
-
-# Insight
-{args.insight}
-
-# Trigger
-{args.trigger}
-"""
+    # Data to save
+    data = {
+        "path": args.path,
+        "trigger": args.trigger,
+        "insight": args.insight,
+    }
 
     # Write the insight file
     try:
+        import json
         with open(file_path, "w", encoding="utf-8") as f:
-            f.write(content)
+            json.dump(data, f, indent=2)
         print(f"Insight recorded successfully: {file_path}")
     except IOError as e:
         print(f"Error: Could not write to file '{file_path}': {e}",

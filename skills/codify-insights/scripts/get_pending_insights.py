@@ -1,37 +1,9 @@
 #!/usr/bin/env python3
 import os
-import re
 import json
 import sys
 
 INSIGHTS_DIR = ".pensieve/insights"
-
-def parse_frontmatter(content):
-    """
-    Extracts YAML frontmatter from markdown content.
-    Returns a dict of key-value pairs.
-    """
-    match = re.search(r'^---\s*\n(.*?)\n---\s*\n', content, re.DOTALL)
-    if not match:
-        return {}
-    
-    yaml_block = match.group(1)
-    data = {}
-    for line in yaml_block.split('\n'):
-        line = line.strip()
-        if not line or line.startswith('#'):
-            continue
-            
-        if ':' in line:
-            key, value = line.split(':', 1)
-            key = key.strip()
-            value = value.strip()
-            # Remove quotes
-            if (value.startswith('"') and value.endswith('"')) or \
-               (value.startswith("'") and value.endswith("'")):
-                value = value[1:-1]
-            data[key] = value
-    return data
 
 def get_grouped_insights():
     if not os.path.exists(INSIGHTS_DIR):
@@ -41,7 +13,7 @@ def get_grouped_insights():
     grouped_dict = {}
 
     for filename in sorted(os.listdir(INSIGHTS_DIR)):
-        if not filename.endswith(".md"):
+        if not filename.endswith(".json"):
             continue
             
         filepath = os.path.join(INSIGHTS_DIR, filename)
@@ -50,22 +22,15 @@ def get_grouped_insights():
 
         try:
             with open(filepath, 'r', encoding='utf-8') as f:
-                content = f.read()
+                data = json.load(f)
             
-            meta = parse_frontmatter(content)
-            
-            parts = content.split('---', 2)
-            body = parts[2].strip() if len(parts) > 2 else ""
-            if not body and not meta:
-                body = content
-
-            target_path = meta.get("path", ".")
+            target_path = data.get("path", ".")
             
             entry = {
                 "filename": filename,
-                "slug": meta.get("slug", "unknown"),
-                "trigger": meta.get("trigger", "No trigger provided"),
-                "content": meta.get("insight", "") or body
+                "slug": data.get("slug", "unknown"),
+                "trigger": data.get("trigger", "No trigger provided"),
+                "content": data.get("insight", "")
             }
 
             if target_path not in grouped_dict:
