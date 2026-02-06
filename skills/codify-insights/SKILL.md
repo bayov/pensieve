@@ -78,9 +78,13 @@ Review **ALL** insights in this group together.
     * Avoid bloating `AGENTS.md` with redundant information. This will become
       context for future agents, so keep it relevant.
     * Ensure the `AGENTS.md` file structure remains clean and structured.
+    * **Format**: Maintain a maximum line width of 80 characters for all
+      Markdown content.
 
 2. **Update Human Docs**: If applicable, update `README.md` or other relevant
    human docs (such as comments within source files under `target_path`).
+    * **Format**: Maintain a maximum line width of 80 characters for all
+      Markdown content.
 
 #### D. Remove
 
