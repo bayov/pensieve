@@ -48,7 +48,7 @@ for skill_dir in "$SUBMODULE_DIR"/src/skills/*/; do
   target="$(realpath --relative-to="$SKILLS_DIR" "$skill_dir")"
 
   if [ -L "$link" ]; then
-    printf "${YELLOW}Symlink already exists: %s${NC}\n" "$link"
+    printf "${YELLOW}Symlink already exists: %s${NC}\n" "$link, skipping"
   else
     ln -s "$target" "$link"
     printf "${GREEN}Linked %s -> %s${NC}\n" "$link" "$target"
