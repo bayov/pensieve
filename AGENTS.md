@@ -1,7 +1,7 @@
 # Pensieve Agent Guidelines
 
 This file provides context and guidelines for AI agents working in the Pensieve repository.
-Pensieve is a codebase knowledge management system that preserves hard-won knowledge (insights) for future agent sessions.
+Pensieve is a codebase knowledge management system that preserves hard-won knowledge (insights) for both human developers and future agent sessions.
 
 ## Project Structure
 

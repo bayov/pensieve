@@ -4,10 +4,11 @@
 >
 > — George Santayana
 
-**Pensieve** is a system for codebase knowledge management, designed to maintain
-a living memory of a project. It ensures that hard-won knowledge—such as tricky
-bugs, hidden dependencies, and undocumented conventions—is preserved and
-automatically shared with future AI agent sessions.
+**Pensieve** is a system for codebase knowledge management,
+designed to maintain a living memory of a project. It ensures
+that hard-won knowledge—such as tricky bugs, hidden
+dependencies, and undocumented conventions—is preserved and
+shared with both future developers and AI coding agents.
 
 ## Core Concepts
 
@@ -22,12 +23,17 @@ obvious. This includes:
 - Counter-intuitive configurations.
 - Undocumented coding conventions.
 
-### AGENTS.md
+### Documentation Targets
 
-The `AGENTS.md` files serve as the permanent memory for AI agents. They are
-placed strategically throughout the codebase to provide local context. When an
-agent operates in a directory, it reads the nearby `AGENTS.md` to understand the
-local rules and history.
+Insights are codified into the most appropriate documentation:
+
+- **README.md** and source-code docs: For knowledge relevant
+  to human developers (conventions, APIs, architecture,
+  gotchas, setup). This is the primary target.
+- **AGENTS.md**: For knowledge relevant only to AI coding
+  agents (tool quirks, agent-specific workarounds). Placed
+  strategically throughout the codebase to provide local
+  agent context.
 
 ## Workflow
 
@@ -36,22 +42,13 @@ Pensieve operates on a simple two-step workflow:
 1. **Record (Immediate & Proactive):** Agents use the `record-insight` skill to
    capture discoveries as they happen. These are stored as raw JSON files in
    `.pensieve/insights/`.
-2. **Codify (On Request):** Periodically, or when requested by a human, the
-   `codify-insights` skill processes these raw insights. It consolidates them,
-   updates the relevant `AGENTS.md` files (and sometimes human docs like
-   `README.md`), and removes the raw files.
+2. **Codify (On Request):** Periodically, or when requested by
+   a human, the `codify-insights` skill processes these raw
+   insights. It routes each insight to the appropriate
+   documentation target (README.md, source-code docs, or
+   AGENTS.md based on audience), and removes the raw files.
 
 ## Usage
-
-### Commands
-
-Pensieve exposes two primary commands via the Gemini CLI:
-
-- **`record [instructions]`**: Analyzes the current session and records all
-  worthwhile insights. You can provide optional instructions to focus the
-  recording.
-- **`codify`**: Processes all pending insights and integrates them into the
-  project's documentation.
 
 ### Skills
 
@@ -63,9 +60,12 @@ The underlying logic is handled by two specialized skills:
 
 ## Project Structure
 
-- `.pensieve/insights/`: Temporary storage for raw, pending insights.
-- `skills/`: Implementation of the core logic (Python scripts and skill
-  definitions).
-- `commands/`: Configuration for the Gemini CLI commands.
-- `AGENTS.md`: (Created throughout the repo) The consolidated knowledge base for
-  agents.
+- `src/`: Contains the contents of the Pensieve plugin/extension.
+  - `src/skills/` - The Pensieve skills.
+  - `src/INSTRUCTIONS.md` - Instructions that should be added to the context of
+    any Agent session, teaching the agent how and when to use the Pensieve
+    skills.
+- `claude-plugin/`: Manifest to load Pensieve as a Claude Code plugin. Contains
+  soft-links to `src/`.
+- `gemini-extensions/`: Manifest to load Pensieve as a Gemini CLI extension.
+  Contains soft-links to `src/`.

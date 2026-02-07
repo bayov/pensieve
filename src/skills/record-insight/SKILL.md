@@ -1,15 +1,15 @@
 ---
 name: record-insight
-description: Records permanent code-base insights (discoveries, conventions, hidden dependencies) to the project memory to prevent repeated mistakes. Use proactively whenever discovering new or undocumented information about the codebase structure, patterns, or logic.
+description: Records codebase insights (discoveries, conventions, hidden dependencies) for both human developers and AI agents. Use proactively whenever discovering new or undocumented information about the codebase structure, patterns, or logic.
 ---
 
 # Record Insight
 
-This tool allows you to permanently record Agent "insights" into the project's
-Agent context (e.g., `AGENTS.md` files). An insight is a piece of knowledge,
-such as a tricky bug, a hidden dependency, a counter-intuitive configuration or
-tool usage, out-of-date documentation, an architectural constraint, or any other
-insight about the codebase that future agent invocations would benefit from.
+This tool allows you to permanently record codebase insights into the project's
+documentation. An insight is a piece of knowledge, such as a tricky bug, a
+hidden dependency, a counter-intuitive configuration or tool usage, out-of-date
+documentation, an architectural constraint, or any other discovery that future
+developers or agent invocations would benefit from.
 
 ## Usage
 
@@ -33,7 +33,7 @@ python3 ${PENSIEVE_ROOT}skills/record-insight/scripts/record_insight.py --slug "
   `docker_permissions`, `auth_token_format`, `importer_race_condition`.
 - `--path`: The directory or file path this insight applies to (e.g.,
   `src/backend`, `importer/import.py`).
-    - It is important to choose the correct parent directory for the insight, so
+    - It is important to choose the correct file/directory for the insight, so
       that later we can easily incorporate the insight into the documentation at
       the right place.
     - Too specific paths may lead to agents missing an important insight when
@@ -64,6 +64,6 @@ python3 ${PENSIEVE_ROOT}skills/record-insight/scripts/record_insight.py --slug "
    components interact, identifying 'source of truth' files, or uncovering
    intended but unwritten architectural rules.
 3. **Write-Only**: When using this skill, your job is only to record and move
-   on. A different agent process will handle the analysis and consolidation of
-   these insights into the project's canonical knowledge base (`AGENTS.md`)
-   later on.
+   on. A different agent will handle the analysis and consolidation of these
+   insights into the project's documentation later on (README.md,
+   source-code docs, or AGENTS.md as appropriate).
