@@ -50,7 +50,7 @@ From your project root:
 
 ```bash
 # Run the install script directly
-bash <(curl -s https://raw.githubusercontent.com/bayov/pensieve/main/install.sh)
+curl -s https://raw.githubusercontent.com/bayov/pensieve/refs/heads/main/install.sh | bash
 
 # Or, if you've already cloned pensieve:
 ./path/to/pensieve/install.sh
