@@ -4,13 +4,23 @@
 >
 > — George Santayana
 
-**Pensieve** is a system for codebase knowledge management,
-designed to maintain a living memory of a project. It ensures
-that hard-won knowledge—such as tricky bugs, hidden
-dependencies, and undocumented conventions—is preserved and
-shared with both future developers and AI coding agents.
+**Pensieve** is a set of agent instructions and skills to ensure that hard-won
+insights during an agent's session are preserved and eventually shared with
+future developers and AI coding agents.
 
 ## Core Concepts
+
+## Workflow
+
+Pensieve operates on a simple two-step workflow:
+
+1. **Record (Immediate & Proactive):** Agents are instructed to use the
+   `record-insight` skill to capture discoveries as they happen. These are
+   stored as raw JSON files in `.pensieve/insights/`.
+2. **Codify (On Request):** Periodically, or when requested by a human, the
+   `codify-insights` skill processes these raw insights. It merges each insight
+   to the appropriate documentation target (README.md, source-code docs, or
+   AGENTS.md based on audience), and removes the raw files.
 
 ### Insights
 
@@ -27,36 +37,53 @@ obvious. This includes:
 
 Insights are codified into the most appropriate documentation:
 
-- **README.md** and source-code docs: For knowledge relevant
-  to human developers (conventions, APIs, architecture,
-  gotchas, setup). This is the primary target.
-- **AGENTS.md**: For knowledge relevant only to AI coding
-  agents (tool quirks, agent-specific workarounds). Placed
-  strategically throughout the codebase to provide local
-  agent context.
+- **For humans:** Insights are merged into READMe.md files or
+  other code documentation files that are meant to be read by humans (including
+  source-code comments).
+- **For agents**: Insights are merged into `AGENTS.md` and other agent-only
+  context files. This is for insights only to coding agents (tool quirks,
+  agent-specific workarounds).
 
-## Workflow
+## Install as Git Submodule
 
-Pensieve operates on a simple two-step workflow:
+From your project root:
 
-1. **Record (Immediate & Proactive):** Agents use the `record-insight` skill to
-   capture discoveries as they happen. These are stored as raw JSON files in
-   `.pensieve/insights/`.
-2. **Codify (On Request):** Periodically, or when requested by
-   a human, the `codify-insights` skill processes these raw
-   insights. It routes each insight to the appropriate
-   documentation target (README.md, source-code docs, or
-   AGENTS.md based on audience), and removes the raw files.
+```bash
+# Run the install script directly
+bash <(curl -s https://raw.githubusercontent.com/bayov/pensieve/main/install.sh)
 
-## Usage
+# Or, if you've already cloned pensieve:
+./path/to/pensieve/install.sh
+```
 
-### Skills
+The script will:
+1. Add pensieve as a submodule at `.agents/pensieve`
+2. Symlink each skill into `.agents/skills/{skill-name}`
 
-The underlying logic is handled by two specialized skills:
+After running, add an `AGENTS.md` to your project root:
 
-- **`record-insight`**: Used to save a specific discovery.
-- **`codify-insights`**: Used to perform the complex task of integrating raw
-  insights into existing documentation.
+```markdown
+# Agent Guidelines
+
+## File References
+
+When you encounter a file reference (e.g., @path/to/file.md), read it into your
+context based on the following rules:
+
+**Lazy References:** (`@path/to/file.md`)
+  - **Lazy Loading:** Read the file's contents only when you believe it to be
+    relevant to the specific task at hand. Do NOT preemptively load all
+    references.
+  - **Caching:** Do NOT read a file you have already read.
+
+**Forced References (`FORCE READ @path/...`):**
+  - **Preemptive:** You MUST read the file immediately upon discovery.
+  - **Caching:** Do NOT read a file you have already read.
+
+## Pensieve
+
+FORCE READ @.agents/pensieve/src/INSTRUCTIONS.md
+```
 
 ## Project Structure
 
