@@ -24,7 +24,15 @@ First, list all pending insights, **grouped by their target path**.
 Run the helper script:
 
 ```bash
-python3 skills/codify-insights/scripts/get_pending_insights.py
+# IMPORTANT: RUN FROM PROJECT ROOT
+
+# If you're Claude Code:
+export PENSIEVE_ROOT="${CLAUDE_PLUGIN_ROOT}/"
+
+# Every other agent:
+export PENSIEVE_ROOT=""
+
+python3 ${PENSIEVE_ROOT}scripts/get_pending_insights.py
 ```
 
 This returns a JSON list where each entry represents a **target directory** and
@@ -94,7 +102,15 @@ remove the raw file to prevent re-processing.
 Run for each processed file in the group:
 
 ```bash
-python3 skills/codify-insights/scripts/remove_insight.py "<filename>"
+# IMPORTANT: RUN FROM PROJECT ROOT
+
+# If you're Claude Code:
+export PENSIEVE_ROOT="${CLAUDE_PLUGIN_ROOT}/"
+
+# Every other agent:
+export PENSIEVE_ROOT=""
+
+python3 ${PENSIEVE_ROOT}skills/codify-insights/scripts/remove_insight.py "<filename>"
 ```
 
 ### 3. Completion

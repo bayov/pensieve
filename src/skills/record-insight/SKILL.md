@@ -16,7 +16,15 @@ insight about the codebase that future agent invocations would benefit from.
 Run the following python script to record an insight:
 
 ```bash
-python3 skills/record-insight/scripts/record_insight.py --slug "<SLUG>" --path "<PATH>" --trigger "<TRIGGER>" --insight "<INSIGHT>"
+# IMPORTANT: RUN FROM PROJECT ROOT
+
+# If you're Claude Code:
+export PENSIEVE_ROOT="${CLAUDE_PLUGIN_ROOT}/"
+
+# Every other agent:
+export PENSIEVE_ROOT=""
+
+python3 ${PENSIEVE_ROOT}skills/record-insight/scripts/record_insight.py --slug "<SLUG>" --path "<PATH>" --trigger "<TRIGGER>" --insight "<INSIGHT>"
 ```
 
 ### Arguments
