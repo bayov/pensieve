@@ -24,7 +24,7 @@ while [[ $# -gt 0 ]]; do
     --skills-dir)    SKILLS_DIR="$2";    shift 2 ;;
     --repo)          REPO="$2";          shift 2 ;;
     *)
-      echo -e "${RED}Usage: install.sh [--submodule-dir .agents/pensieve] [--skills-dir .agents/skills] [--repo git@github.com:bayov/pensieve.git]${NC}" >&2
+      printf "${RED}Usage: install.sh [--submodule-dir .agents/pensieve] [--skills-dir .agents/skills] [--repo git@github.com:bayov/pensieve.git]${NC}\n" >&2
       exit 1
       ;;
   esac
@@ -32,9 +32,9 @@ done
 
 # 1. Add submodule
 if [ -d "$SUBMODULE_DIR" ]; then
-  echo -e "${YELLOW}Submodule already exists at $SUBMODULE_DIR, skipping.${NC}"
+  printf "${YELLOW}Submodule already exists at %s, skipping.${NC}\n" "$SUBMODULE_DIR"
 else
-  echo -e "${BLUE}Adding pensieve submodule...${NC}"
+  printf "${BLUE}Adding pensieve submodule...${NC}\n"
   git submodule add "$REPO" "$SUBMODULE_DIR"
 fi
 
@@ -48,15 +48,15 @@ for skill_dir in "$SUBMODULE_DIR"/src/skills/*/; do
   target="$(realpath --relative-to="$SKILLS_DIR" "$skill_dir")"
 
   if [ -L "$link" ]; then
-    echo -e "${YELLOW}Symlink already exists: $link${NC}"
+    printf "${YELLOW}Symlink already exists: %s${NC}\n" "$link"
   else
     ln -s "$target" "$link"
-    echo -e "${GREEN}Linked $link -> $target${NC}"
+    printf "${GREEN}Linked %s -> %s${NC}\n" "$link" "$target"
   fi
 done
 
-echo ""
-echo -e "${GREEN}${BOLD}Done!${NC} Next steps:"
-echo -e "  1. ${BOLD}[IMPORTANT]${NC} Add Pensieve instructions to your ${BOLD}AGENTS.md${NC} (or ${BOLD}CLAUDE.md${NC})."
-echo -e "     See the pensieve README for the recommended template."
-echo -e "  2. Commit the changes."
+printf "\n"
+printf "${GREEN}${BOLD}Done!${NC} Next steps:\n"
+printf "  1. ${BOLD}[IMPORTANT]${NC} Add Pensieve instructions to your ${BOLD}AGENTS.md${NC} (or ${BOLD}CLAUDE.md${NC}).\n"
+printf "     See the pensieve README for the recommended template.\n"
+printf "  2. Commit the changes.\n"
