@@ -15,7 +15,7 @@ def get_grouped_insights():
     for filename in sorted(os.listdir(INSIGHTS_DIR)):
         if not filename.endswith(".json"):
             continue
-            
+
         filepath = os.path.join(INSIGHTS_DIR, filename)
         if not os.path.isfile(filepath):
             continue
@@ -23,9 +23,9 @@ def get_grouped_insights():
         try:
             with open(filepath, 'r', encoding='utf-8') as f:
                 data = json.load(f)
-            
+
             target_path = data.get("path", ".")
-            
+
             entry = {
                 "filename": filename,
                 "trigger": data.get("trigger", "No trigger provided"),
